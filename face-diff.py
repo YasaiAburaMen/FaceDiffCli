@@ -54,9 +54,6 @@ def make_rotated_img(img_path, new_img_path, landmark):
     rotated_right = get_rotated_point(new_right_eye, rotate_digree, new_center_point)
     rotated_nose = get_rotated_point(new_nose, rotate_digree, new_center_point)
 
-    #return ((int(left_eye['x']), int(left_eye['y'])) ,
-    #        (int(right_eye['x']), int(right_eye['y'])),
-    #        (int(nose['x']), int(nose['y'])))
     return (rotated_left, rotated_right, rotated_nose)
         
 def get_digree(x1, y1, x2, y2):
@@ -89,7 +86,6 @@ def rotate_img(img_path):
 
 
 def superimpose_img(img1, p1, img2, p2, diff_img):
-    # img1を基準に重ねる
     x_diff = round(p1[0][0] - p2[0][0], 2) * -1
     y_diff = round(p1[0][1] - p2[0][1], 2) * -1
     point = ''
@@ -102,13 +98,10 @@ def superimpose_img(img1, p1, img2, p2, diff_img):
     else:
         point = point + str(y_diff)
 
-    #拡大
-    #subprocess.run(['convert', img2])    
     subprocess.run(['composite','-gravity','northwest',
                     '-geometry', point,
                     '-compose','difference',
                      img1, img2, diff_img])    
-    return
 
 def main(img1, img2, diff_path):
     img_path1 = img1
